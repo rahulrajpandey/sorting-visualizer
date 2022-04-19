@@ -1,0 +1,20 @@
+/* box to hold array items and where animations will be performed */
+#divBars {
+    width: 500px;
+    border: 2px solid green;
+    padding: 5px;
+    margin: 2px;
+    float: left;
+    overflow: auto;
+}
+
+/* each array item as box */
+.box {
+    display: inline-block;
+    position: relative;
+    width: 10px;
+    background-color: cadetblue;
+    padding: 2px;
+    margin: 2px;
+    overflow: auto;
+}
