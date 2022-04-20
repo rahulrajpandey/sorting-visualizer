@@ -10,15 +10,22 @@
 </head>
 
 <body>
-    <div>
+    <div id="divControls">
         <button id="btnArrayGenerator">Generate Random Array</button>
         <button id="btnBubbleSort">Bubble Sort</button>
+        <div class="divSlideContainer">
+            <input type="range" min="5" max="50" value="25" step="5" class="slider" name="animationSpeedSlider"
+                id="animationSlider">
+            <label for="animationSpeedSlider">Animation Speed</label>
+        </div>
     </div>
-    <div>
-        <textarea name="txtArea" id="txtArea" cols="100" rows="2">Array: </textarea>
+
+    <div id="divTxtArea">
+        Array: <input type="text" name="txtArea" id="txtArea">
     </div>
+
     <div id="divBars">
-        <!-- place boxes of numbers here -->
+        <!-- place boxes of array items here using Javascript -->
     </div>
 
     <!-- scripts -->

@@ -18,3 +18,11 @@
     margin: 2px;
     overflow: auto;
 }
+
+/* text element to display array */
+#txtArea{
+    width: fit-content;
+    scroll-behavior: auto;
+}
+
+/* animation speed slider */
