@@ -46,67 +46,83 @@
   /* ***************** UI EVENTS HANDLERS ******************* */
   /* ******************************************************** */
 
+
+  /**
+   * Objective: Generate array of random numbers in some range.
+   * 
+   * Operations:
+   * - Reset the array data structure.
+   * - Generate 20 random Numbers in the range [30, 200] by calling getRandomInt().
+   * - Push all those Numbers into the array.
+   * - Display the array in the txtElement.
+   * - Call showBoxes() to display the array number in form of box in the respective div.
+   */
   btnArrayGenElement.addEventListener("click", function () {
-    // generate random positive array
     array.length = 0; // clear the array
 
-    // add 20 numbers in the range 30 to 200
-    for (var count = 0; count < 20; count++) {
+    for (var count = 0; count < 20; count++) { // add 20 numbers in the range 30 to 200
       array.push(getRandomInt(30, 200));
     }
 
-    // set in the textarea
-    txtElement.value = array;
-
-    // call to display array boxes into divbars div section
-    showBoxes(array);
+    txtElement.value = array; // set array in the textarea
+    showBoxes(array); // call to display array boxes into divbars div section
   });
 
+
+  /**
+   * Objective: Bubble Sort array of Numbers and add the steps performed in the animations array.
+   * 
+   * Operations:
+   * - Disable the buttons and input controls, so that animation runs smoothly.
+   * - Get the animation slider value.
+   * - Reset the animations array.
+   * - Start Bubble Sorting.
+   * -- push current indexes being compared into animations array twice 
+   * -- (first push to change color from Primary to Comparing and second push to revert the first push action)
+   * -- If swap is required, do and then add the swaps into the animations array
+   * -- (push- index, new height of box at that index)
+   * - Call showAnimations() to start animation on the UI.
+   */
   btnBubbleSortElement.addEventListener("click", function () {
-    // disable the divControls
-    enableDisableUIElements(false);
+    enableDisableUIElements(false); // disable the divControls
+    animationRangeValue = rangeAnimationSliderElement.value; // get Animation Speed
+    animations.length = 0; // reset animation array
 
-    // get Animation Speed
-    animationRangeValue = rangeAnimationSliderElement.value;
+    for (var i = 0; i < array.length; i++) { // bubble sort starts
+      let sortingFlag = false; // to optimize the sorting, once array is sorted, no more iterations will be made
 
-    // reset items
-    animations.length = 0;
+      for (var j = 0; j < array.length - i - 1; j++) { // inner for loop starts
+        
+        // push current indexes in comparison to the animations array 
+        animations.push(new AnimationStep(j, j + 1, false)); // change color to comparison
+        animations.push(new AnimationStep(j, j + 1, false)); // back to original color
 
-    // bubble sort
-    for (var i = 0; i < array.length; i++) {
-      // Last i elements are already in place
-      let sortingFlag = false;
-      for (var j = 0; j < array.length - i - 1; j++) {
-        // Checking if the item at present iteration
-        // is greater than the next iteration
-        animations.push(new AnimationStep(j, j + 1, false)); // change color
-        animations.push(new AnimationStep(j, j + 1, false)); // back to initial color
-
-        if (array[j] > array[j + 1]) {
+        if (array[j] > array[j + 1]) { // If the condition is true then swap them
           sortingFlag = true;
-          // If the condition is true then swap them
+
           var temp1 = array[j];
           var temp2 = array[j + 1];
+
           array[j] = temp2;
           array[j + 1] = temp1;
 
+          // push swap operation in the animations array
           animations.push(new AnimationStep(j, temp2, true)); // index, item height, true
           animations.push(new AnimationStep(j + 1, temp1, true)); // index, item height, true
         }
+
+      } // inner for loop ends
+
+      if (sortingFlag === false) { // check if array is sorted now
+        break; 
       }
 
-      // check for sortingFlag
-      if (sortingFlag === false) {
-        break; // array now sorted
-      }
-    }
+    } // bubble sort ends
 
-    // Print the sorted array
-    console.log(array);
-
-    // return animation array
-    showAnimations(animations);
+    console.log(array); // Print the sorted array
+    showAnimations(animations); // call animation display
   });
+
 
   /* ******************************************************** */
   /* *************** UTILITY FUNCTIONS ********************** */
@@ -214,6 +230,7 @@
 
       if (positionChangeCheck) {
         const box = boxHTMLCollection.item(firstIndex);
+        
         setTimeout(function () {
           box.style.height = secondIndex + "px";
 
@@ -222,9 +239,11 @@
           }
 
         }, (i * animationPace));
+
       } else {
         const box1 = boxHTMLCollection.item(firstIndex);
         const box2 = boxHTMLCollection.item(secondIndex);
+        
         setTimeout(function () {
           if (i & 1) { // odd, set original color
             box1.style.backgroundColor = ORIGINAL_COLOR;
@@ -239,6 +258,7 @@
           }
 
         }, (i * animationPace));
+
       }
     } // animation ends
 
