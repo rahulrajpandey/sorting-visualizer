@@ -1,18 +1,20 @@
 /* box to hold array items and where animations will be performed */
 #divBars {
-    width: 500px;
-    border: 2px solid green;
+    width: 700px;
+    height: 300px;
     padding: 5px;
     margin: 2px;
     float: left;
     overflow: auto;
+    background-color: #f0ede7;
+    box-shadow: 12px 12px 18px 0px rgba(161, 150, 161, 0.64);
 }
 
 /* each array item as box */
 .box {
     display: inline-block;
     position: relative;
-    width: 10px;
+    width: 27px;
     background-color: cadetblue;
     padding: 2px;
     margin: 2px;
@@ -20,9 +22,7 @@
 }
 
 /* text element to display array */
-#txtArea{
-    width: fit-content;
+#txtArea {
+    width: 480px;
     scroll-behavior: auto;
 }
-
-/* animation speed slider */

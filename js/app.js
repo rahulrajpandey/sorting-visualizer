@@ -19,10 +19,11 @@
 
   // AnimationStep template
   class AnimationStep {
-    constructor(firstIdx, secondIdx, ifPosChange) {
+    constructor(firstIdx, secondIdx, ifPosChange, color) {
       this.firstIdx = firstIdx;
       this.secondIdx = secondIdx;
       this.ifPosChange = ifPosChange;
+      this.color = color;
     }
   }
 
@@ -33,12 +34,12 @@
 
 
   var btnArrayGenElement = document.querySelector("#btnArrayGenerator");
-  var btnBubbleSortElement = document.querySelector("#btnBubbleSort");
+  var btnSortElement = document.querySelector("#btnSort");
   var txtElement = document.querySelector("#txtArea");
   var divBarsElement = document.querySelector("#divBars");
   var rangeAnimationSliderElement = document.querySelector("#animationSlider");
 
-  
+
   txtElement.disabled = true; // disable the text box
 
 
@@ -83,44 +84,29 @@
    * -- (push- index, new height of box at that index)
    * - Call showAnimations() to start animation on the UI.
    */
-  btnBubbleSortElement.addEventListener("click", function () {
+  // 
+  btnSortElement.addEventListener("click", function () {
     enableDisableUIElements(false); // disable the divControls
     animationRangeValue = rangeAnimationSliderElement.value; // get Animation Speed
-    animations.length = 0; // reset animation array
+    let sortingAlgo = document.querySelector(`input[type="radio"][name=sortingAlgo]:checked`).value;
+    switch (sortingAlgo) {
+      case "bubbleSort":
+        bubbleSort(array);
+        break;
+      case "selectionSort":
+        selectionSort(array);
+        break;
+      case "insertionSort":
+        insertionSort(array);
+        break;
+      case "quickSort":
+        quickSort(array);
+        break;
+      case "mergeSort":
+        mergeSort(array);
+        break;
+    }
 
-    for (var i = 0; i < array.length; i++) { // bubble sort starts
-      let sortingFlag = false; // to optimize the sorting, once array is sorted, no more iterations will be made
-
-      for (var j = 0; j < array.length - i - 1; j++) { // inner for loop starts
-        
-        // push current indexes in comparison to the animations array 
-        animations.push(new AnimationStep(j, j + 1, false)); // change color to comparison
-        animations.push(new AnimationStep(j, j + 1, false)); // back to original color
-
-        if (array[j] > array[j + 1]) { // If the condition is true then swap them
-          sortingFlag = true;
-
-          var temp1 = array[j];
-          var temp2 = array[j + 1];
-
-          array[j] = temp2;
-          array[j + 1] = temp1;
-
-          // push swap operation in the animations array
-          animations.push(new AnimationStep(j, temp2, true)); // index, item height, true
-          animations.push(new AnimationStep(j + 1, temp1, true)); // index, item height, true
-        }
-
-      } // inner for loop ends
-
-      if (sortingFlag === false) { // check if array is sorted now
-        break; 
-      }
-
-    } // bubble sort ends
-
-    console.log(array); // Print the sorted array
-    showAnimations(animations); // call animation display
   });
 
 
@@ -138,11 +124,11 @@
     if (doEnable === true) {
       rangeAnimationSliderElement.disabled = false;
       btnArrayGenElement.disabled = false;
-      btnBubbleSortElement.disabled = false;
+      btnSortElement.disabled = false;
     } else {
       rangeAnimationSliderElement.disabled = true;
       btnArrayGenElement.disabled = true;
-      btnBubbleSortElement.disabled = true;
+      btnSortElement.disabled = true;
     }
   }
 
@@ -169,6 +155,7 @@
       const boxItem = document.createElement("div");
       boxItem.className = "box";
       boxItem.style.height = item + "px";
+      boxItem.innerHTML = item;
       fragment.appendChild(boxItem);
     });
 
@@ -203,7 +190,7 @@
    * 
    * -- If YES, get reference to the box on UI at the firstIndex in this Object
    * --- Start setTimeOut for Animation, and inside setTimeOut do the following:
-   * --- Set the height of this box to the secondIndex value in pixels.
+   * --- Set the height of this box to the secondIndex value in pixels and innerHTML text vaue to secondIndex value.
    * --- Also check if, current index in array has reached to the end, then enable UI elementds 
    * 
    * -- If NO, get reference to the boxes at first and second index
@@ -227,12 +214,14 @@
       let firstIndex = animationStep.firstIdx;
       let secondIndex = animationStep.secondIdx;
       let positionChangeCheck = animationStep.ifPosChange;
+      let animationStepColor = animationStep.color;
 
       if (positionChangeCheck) {
         const box = boxHTMLCollection.item(firstIndex);
-        
+
         setTimeout(function () {
           box.style.height = secondIndex + "px";
+          box.innerHTML = secondIndex;
 
           if (i === (animationsLength - 1)) { // enable UI Elements
             enableDisableUIElements(true);
@@ -243,15 +232,10 @@
       } else {
         const box1 = boxHTMLCollection.item(firstIndex);
         const box2 = boxHTMLCollection.item(secondIndex);
-        
+
         setTimeout(function () {
-          if (i & 1) { // odd, set original color
-            box1.style.backgroundColor = ORIGINAL_COLOR;
-            box2.style.backgroundColor = ORIGINAL_COLOR;
-          } else { // set comparison color
-            box1.style.backgroundColor = COMPARISON_COLOR;
-            box2.style.backgroundColor = COMPARISON_COLOR;
-          }
+          box1.style.backgroundColor = animationStepColor;
+          box2.style.backgroundColor = animationStepColor;
 
           if (i === (animationsLength - 1)) { // enable UI Elements
             enableDisableUIElements(true);
@@ -291,16 +275,140 @@
    */
   function getAnimationPace(animationRangeValue) {
     switch (animationRangeValue) {
-      case "5": return 1000;
-      case "10": return 900;
-      case "15": return 800;
-      case "20": return 700;
-      case "25": return 600;
-      case "30": return 500;
-      case "35": return 400;
-      case "40": return 300;
-      case "45": return 200
-      case "50": return 100;
+      case "5": return 95;
+      case "10": return 85;
+      case "15": return 75;
+      case "20": return 65;
+      case "25": return 55;
+      case "30": return 45;
+      case "35": return 35;
+      case "40": return 25;
+      case "45": return 15;
+      case "50": return 5;
     }
   }
+
+  /* ******************************************************** */
+  /* *************** SORTING ALGORITHMS ********************* */
+  /* ******************************************************** */
+
+
+  // bubble sort
+  function bubbleSort(array) {
+    animations.length = 0; // reset animation array
+
+    for (var i = 0; i < array.length; i++) { // bubble sort starts
+      let sortingFlag = false; // to optimize the sorting, once array is sorted, no more iterations will be made
+
+      for (var j = 0; j < array.length - i - 1; j++) { // inner for loop starts
+
+        // push current indexes in comparison to the animations array 
+        animations.push(new AnimationStep(j, j + 1, false, "red")); // change color to comparison
+        animations.push(new AnimationStep(j, j + 1, false, "cadetblue")); // back to original color
+
+        if (array[j] > array[j + 1]) { // If the condition is true then swap them
+          sortingFlag = true;
+
+          var temp1 = array[j];
+          var temp2 = array[j + 1];
+
+          array[j] = temp2;
+          array[j + 1] = temp1;
+
+          // push swap operation in the animations array
+          animations.push(new AnimationStep(j, temp2, true, "cadetblue")); // index, item height, true
+          animations.push(new AnimationStep(j + 1, temp1, true, "cadetblue")); // index, item height, true
+        }
+
+      } // inner for loop ends
+
+      if (sortingFlag === false) { // check if array is sorted now
+        break;
+      }
+
+    } // bubble sort ends
+
+    console.log(array); // Print the sorted array
+    showAnimations(animations); // call animation display
+  }
+
+  // seletion sort
+  function selectionSort(array) {
+    animations.length = 0;
+
+    let arrayLen = array.length;
+
+    // One by one move boundary of unsorted subarray
+    for (let i = 0; i < arrayLen - 1; i++) {
+      // Find the minimum element in unsorted array
+      let min_idx = i;
+      for (let j = i + 1; j < arrayLen; j++) {
+        // push current indexes in comparison to the animations array 
+        animations.push(new AnimationStep(j, min_idx, false, "red")); // change color to comparison
+        animations.push(new AnimationStep(j, min_idx, false, "cadetblue")); // back to original color
+
+        if (array[j] < array[min_idx]) {
+          min_idx = j;
+        }
+      }
+      // Swap the found minimum element with the first element
+      // swap(arr, min_idx, i);
+      let temp = array[i];
+      let temp2 = array[min_idx];
+      array[i] = temp2;
+      array[min_idx] = temp;
+
+      // push swap operation in the animations array
+      animations.push(new AnimationStep(i, temp2, true, "cadetblue")); // index, item height, true
+      animations.push(new AnimationStep(min_idx, temp, true, "cadetblue")); // index, item height, true
+    }
+
+    // print sorted array
+    console.log("Selection sort Array: " + array);
+    // call animation show
+    showAnimations(animations);
+  }
+
+  // insertion sort
+  function insertionSort(array) {
+    // reset animations array
+    animations.length = 0;
+
+    let arrayLen = array.length;
+
+    for (let i = 1; i < arrayLen; i++) {
+      let key = array[i];
+      let j = i - 1;
+
+      // push current indexes in comparison to the animations array
+      animations.push(new AnimationStep(j, i, false, "red"));
+      animations.push(new AnimationStep(j, i, false, "cadetblue"));
+
+      /* Move elements of arr[0..i-1], that are greater than key, to one position ahead of their current position */
+      while (j >= 0 && array[j] > key) {
+        array[j + 1] = array[j];
+        animations.push(new AnimationStep(j + 1, array[j], true, "cadetblue")); // index, item height, true
+        j = j - 1;
+      }
+      array[j + 1] = key;
+      // push swap operation in the animations array
+      animations.push(new AnimationStep(j + 1, key, true, "cadetblue")); // index, item height, true
+    }
+
+    // print sorted array
+    console.log("Insertion Sorted Array : " + array);
+    // call animation show
+    showAnimations(animations);
+  }
+
+  // quick sort
+  function quickSort(array) {
+    return;
+  }
+
+  // merge sort
+  function mergeSort(array) {
+    return;
+  }
+
 })();
