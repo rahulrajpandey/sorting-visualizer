@@ -35,12 +35,12 @@
 
   var btnArrayGenElement = document.querySelector("#btnArrayGenerator");
   var btnSortElement = document.querySelector("#btnSort");
-  var txtElement = document.querySelector("#txtArea");
+  var divTextAreaElement = document.querySelector("#divTextArea");
   var divBarsElement = document.querySelector("#divBars");
   var rangeAnimationSliderElement = document.querySelector("#animationSlider");
 
 
-  txtElement.disabled = true; // disable the text box
+  divTextAreaElement.disabled = true; // disable the text area div
 
 
   /* ******************************************************** */
@@ -65,7 +65,7 @@
       array.push(getRandomInt(30, 200));
     }
 
-    txtElement.value = array; // set array in the textarea
+    divTextAreaElement.innerHTML = array; // set array in the textarea
     showBoxes(array); // call to display array boxes into divbars div section
   });
 
@@ -231,30 +231,30 @@
 
       } else {
         const box1 = boxHTMLCollection.item(firstIndex);
-        
-        if(secondIndex === -1){ // quickSort case, pivot element coloring
+
+        if (secondIndex === -1) { // quickSort case, pivot element coloring
           setTimeout(function () {
             box1.style.backgroundColor = animationStepColor;
-  
+
             if (i === (animationsLength - 1)) { // enable UI Elements
               enableDisableUIElements(true);
             }
-  
+
           }, (i * animationPace));
 
-        }else{
+        } else {
           const box2 = boxHTMLCollection.item(secondIndex);
 
           setTimeout(function () {
-          box1.style.backgroundColor = animationStepColor;
-          box2.style.backgroundColor = animationStepColor;
+            box1.style.backgroundColor = animationStepColor;
+            box2.style.backgroundColor = animationStepColor;
 
-          if (i === (animationsLength - 1)) { // enable UI Elements
-            enableDisableUIElements(true);
-          }
+            if (i === (animationsLength - 1)) { // enable UI Elements
+              enableDisableUIElements(true);
+            }
 
-        }, (i * animationPace));
-      }
+          }, (i * animationPace));
+        }
       }
     } // animation ends
 
@@ -340,7 +340,7 @@
 
     } // bubble sort ends
 
-    console.log(array); // Print the sorted array
+    console.log("Bubble Sort Array: " + array); // Print the sorted array
     showAnimations(animations); // call animation display
   }
 
@@ -414,51 +414,61 @@
   }
 
   // quick sort helper for partitioning
-  function partition(array, low, high, animations)
-  {
-      let temp, temp2;
-      let pivot = array[high];
- 
-      // color pivot element
-      animations.push(new AnimationStep(high, -1, false, 'green')); // secondIndex -1 means just the firstIndex needs to be operated
+  function partition(array, low, high, animations) {
+    let temp, temp2;
+    let pivot = array[high];
 
-      // index of smaller element
-      let i = (low - 1);
-      for (let j = low; j <= high - 1; j++) {
+    // color pivot element
+    animations.push(new AnimationStep(high, -1, false, 'green')); // secondIndex -1 means just the firstIndex needs to be operated
+
+    // index of smaller element
+    let i = (low - 1);
+    for (let j = low; j <= high - 1; j++) {
+
+      if (array[j] <= pivot) {
+        i++;
+
+        if (i !== j) {
+          animations.push(new AnimationStep(i, j, false, 'red')); // secondIndex -1 means just the firstIndex needs to be operated
+          animations.push(new AnimationStep(i, j, false, 'cadetblue'));
+        } else {
           // change color of current index in comparison
           animations.push(new AnimationStep(j, -1, false, 'red')); // secondIndex -1 means just the firstIndex needs to be operated
           animations.push(new AnimationStep(j, -1, false, 'cadetblue'));
+        }
 
-          if (array[j] <= pivot) {
-              i++;
-              temp = array[i];
-              temp2 = array[j];
-              array[i] = temp2;
-              array[j] = temp;
-              // position change
-              animations.push(new AnimationStep(i, temp2, true, "cadetblue")); // index, item height, true
-              animations.push(new AnimationStep(j, temp, true, "cadetblue")); // index, item height, true
-          }
+        temp = array[i];
+        temp2 = array[j];
+        array[i] = temp2;
+        array[j] = temp;
+        // position change
+        animations.push(new AnimationStep(i, temp2, true, "cadetblue")); // index, item height, true
+        animations.push(new AnimationStep(j, temp, true, "cadetblue")); // index, item height, true
+      } else {
+        // change color of current index in comparison
+        animations.push(new AnimationStep(j, -1, false, 'red')); // secondIndex -1 means just the firstIndex needs to be operated
+        animations.push(new AnimationStep(j, -1, false, 'cadetblue'));
       }
- 
-      // color pivot element back to original
-      animations.push(new AnimationStep(high, -1, false, 'cadetblue')); // secondIndex -1 means just the firstIndex needs to be operated
+    }
 
-      // swap arr[i+1] and arr[high]
-      temp = array[i + 1];
-      temp2 = array[high];
-      array[i + 1] = temp2;
-      array[high] = temp;
+    // color pivot element back to original
+    animations.push(new AnimationStep(high, -1, false, 'cadetblue')); // secondIndex -1 means just the firstIndex needs to be operated
 
-      // position change
-      animations.push(new AnimationStep(i+1, temp2, true, "cadetblue")); // index, item height, true
-      animations.push(new AnimationStep(high, temp, true, "cadetblue")); // index, item height, true
- 
-      return i + 1;
+    // swap arr[i+1] and arr[high]
+    temp = array[i + 1];
+    temp2 = array[high];
+    array[i + 1] = temp2;
+    array[high] = temp;
+
+    // position change
+    animations.push(new AnimationStep(i + 1, temp2, true, "cadetblue")); // index, item height, true
+    animations.push(new AnimationStep(high, temp, true, "cadetblue")); // index, item height, true
+
+    return i + 1;
   }
 
   // quick sort helper
-  function quickSortHelper(array, low, high, animations){
+  function quickSortHelper(array, low, high, animations) {
     // Create an auxiliary stack
     let stack = new Array(high - low + 1);
     stack.fill(0);
@@ -469,20 +479,20 @@
     stack[++top] = high;
 
     while (top >= 0) {
-        high = stack[top--];
-        low = stack[top--];
+      high = stack[top--];
+      low = stack[top--];
 
-        let p = partition(array, low, high, animations);
+      let p = partition(array, low, high, animations);
 
-        if (p - 1 > low) {
-            stack[++top] = low;
-            stack[++top] = p - 1;
-        }
+      if (p - 1 > low) {
+        stack[++top] = low;
+        stack[++top] = p - 1;
+      }
 
-        if (p + 1 < high) {
-            stack[++top] = p + 1;
-            stack[++top] = high;
-        }
+      if (p + 1 < high) {
+        stack[++top] = p + 1;
+        stack[++top] = high;
+      }
     }
   }
 
@@ -490,22 +500,111 @@
   function quickSort(array) {
     animations.length = 0;
     quickSortHelper(array, 0, array.length - 1, animations);
-    
+
     // sorted array
     console.log("Quick Sort Array: " + array);
 
     // animations
-    console.log(animations);
+    // console.log(animations);
 
     // animation show
     showAnimations(animations);
   }
 
 
+  // merge sort helper : merge
+  function merge(arr, left, mid, right, animations) {
+    let n1 = mid - left + 1;
+    let n2 = right - mid;
+
+    // Create temp arrays
+    let L = new Array(n1);
+    let R = new Array(n2);
+
+    // Copy data to temp arrays L[] and R[]
+    for (let i = 0; i < n1; i++)
+      L[i] = arr[left + i];
+    for (let j = 0; j < n2; j++)
+      R[j] = arr[mid + 1 + j];
+
+    // Merge the temp arrays back into arr[l..r]
+
+    // Initial index of first subarray
+    let i = 0;
+
+    // Initial index of second subarray
+    let j = 0;
+
+    // Initial index of merged subarray
+    let k = left;
+
+    while (i < n1 && j < n2) {
+      // color change for comparing indexes
+      animations.push(new AnimationStep(i, j, false, 'red'));
+      animations.push(new AnimationStep(i, j, false, 'cadetblue'));
+
+      if (L[i] <= R[j]) {
+        let temp1 = L[i];
+        array[k] = temp1;
+        // position change
+        animations.push(new AnimationStep(k, temp1, true, 'cadetblue'));
+        i++;
+      }
+      else {
+        let temp2 = R[j];
+        array[k] = temp2;
+        // position change
+        animations.push(new AnimationStep(k, temp2, true, 'cadetblue'));
+        j++;
+      }
+      k++;
+    }
+
+    // Copy the remaining elements of
+    // L[], if there are any
+    while (i < n1) {
+      let temp = L[i];
+      array[k] = temp;
+      i++;
+      k++;
+      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
+    }
+
+    // Copy the remaining elements of
+    // R[], if there are any
+    while (j < n2) {
+      let temp = R[j];
+      array[k] = temp;
+      j++;
+      k++;
+      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
+    }
+  }
+
+  // merge sort helper
+  function mergeSortHelper(array, left, right, animations) {
+    if (left >= right) {
+      return;//returns recursively
+    }
+    let mid = left + parseInt((right - left) / 2);
+    mergeSortHelper(array, left, mid, animations);
+    mergeSortHelper(array, mid + 1, right, animations);
+    merge(array, left, mid, right, animations);
+  }
+
 
   // merge sort
   function mergeSort(array) {
-    return;
+    // reset animations 
+    animations.length = 0;
+
+    mergeSortHelper(array, 0, array.length - 1, animations);
+
+    // sorted array
+    console.log("Merge Sort Array: " + array);
+
+    // show animations
+    showAnimations(animations);
   }
 
 })();
