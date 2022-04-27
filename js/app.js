@@ -44,6 +44,12 @@
 
 
   /* ******************************************************** */
+  /* *********** Initialize Array on Page Load ************** */
+  /* ******************************************************** */
+  generateRandomArray();
+
+
+  /* ******************************************************** */
   /* ***************** UI EVENTS HANDLERS ******************* */
   /* ******************************************************** */
 
@@ -59,14 +65,7 @@
    * - Call showBoxes() to display the array number in form of box in the respective div.
    */
   btnArrayGenElement.addEventListener("click", function () {
-    array.length = 0; // clear the array
-
-    for (var count = 0; count < 20; count++) { // add 20 numbers in the range 30 to 200
-      array.push(getRandomInt(30, 200));
-    }
-
-    divTextAreaElement.innerHTML = array; // set array in the textarea
-    showBoxes(array); // call to display array boxes into divbars div section
+    generateRandomArray();
   });
 
 
@@ -259,6 +258,20 @@
     } // animation ends
 
     console.log("DONE!");
+  }
+
+  /**
+   * 
+   */
+  function generateRandomArray() {
+    array.length = 0; // clear the array
+
+    for (var count = 0; count < 20; count++) { // add 20 numbers in the range 50 to 350
+      array.push(getRandomInt(50, 350));
+    }
+
+    divTextAreaElement.innerHTML = array; // set array in the textarea
+    showBoxes(array); // call to display array boxes into divbars div section
   }
 
   /**
