@@ -300,15 +300,15 @@
    */
   function getAnimationPace(animationRangeValue) {
     switch (animationRangeValue) {
-      case "5": return 95;
-      case "10": return 85;
-      case "15": return 75;
-      case "20": return 65;
-      case "25": return 55;
-      case "30": return 45;
-      case "35": return 35;
-      case "40": return 25;
-      case "45": return 15;
+      case "5":  return 87;
+      case "10": return 75;
+      case "15": return 64;
+      case "20": return 54;
+      case "25": return 45;
+      case "30": return 37;
+      case "35": return 29;
+      case "40": return 21;
+      case "45": return 13;
       case "50": return 5;
     }
   }
