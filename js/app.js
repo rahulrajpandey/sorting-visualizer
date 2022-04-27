@@ -513,9 +513,11 @@
 
 
   // merge sort helper : merge
-  function merge(arr, left, mid, right, animations) {
+  function merge(array, left, mid, right, animations) {
     let n1 = mid - left + 1;
     let n2 = right - mid;
+    let midTracker = mid + 1;
+    let leftTracker = left;
 
     // Create temp arrays
     let L = new Array(n1);
@@ -523,9 +525,9 @@
 
     // Copy data to temp arrays L[] and R[]
     for (let i = 0; i < n1; i++)
-      L[i] = arr[left + i];
+      L[i] = array[left + i];
     for (let j = 0; j < n2; j++)
-      R[j] = arr[mid + 1 + j];
+      R[j] = array[mid + 1 + j];
 
     // Merge the temp arrays back into arr[l..r]
 
@@ -540,8 +542,8 @@
 
     while (i < n1 && j < n2) {
       // color change for comparing indexes
-      animations.push(new AnimationStep(i, j, false, 'red'));
-      animations.push(new AnimationStep(i, j, false, 'cadetblue'));
+      animations.push(new AnimationStep(leftTracker, midTracker, false, 'red'));
+      animations.push(new AnimationStep(leftTracker, midTracker, false, 'cadetblue'));
 
       if (L[i] <= R[j]) {
         let temp1 = L[i];
@@ -549,6 +551,7 @@
         // position change
         animations.push(new AnimationStep(k, temp1, true, 'cadetblue'));
         i++;
+        leftTracker = leftTracker + 1;
       }
       else {
         let temp2 = R[j];
@@ -556,6 +559,7 @@
         // position change
         animations.push(new AnimationStep(k, temp2, true, 'cadetblue'));
         j++;
+        midTracker = midTracker + 1;
       }
       k++;
     }
@@ -565,9 +569,9 @@
     while (i < n1) {
       let temp = L[i];
       array[k] = temp;
+      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
       i++;
       k++;
-      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
     }
 
     // Copy the remaining elements of
@@ -575,9 +579,10 @@
     while (j < n2) {
       let temp = R[j];
       array[k] = temp;
+      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
       j++;
       k++;
-      animations.push(new AnimationStep(k, temp, true, 'cadetblue')); // position change
+
     }
   }
 
