@@ -1,0 +1,27 @@
+#divBars {
+    box-shadow: 12px 12px 15px 0px rgba(161, 150, 161, 0.64);
+    width: fit-content;
+    margin: 1px;
+}
+
+.vr {
+    background-color: rgb(0, 123, 255);
+    margin: 1px;
+    width: 30px;
+    color: white;
+}
+
+mark.red {
+    color: red;
+    background: none;
+}
+
+mark.green {
+    color: green;
+    background: none;
+}
+
+mark.primary {
+    color: rgb(0, 123, 255);
+    background: none;
+}

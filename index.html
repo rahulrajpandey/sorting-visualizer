@@ -5,76 +5,138 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorting Algorithms Visualizer</title>
-    <link rel="stylesheet" href="./css/app.css">
+    <title>Bootstrap Example</title>
+    <link rel="stylesheet" href="./bootstrap5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./app.css"> <!-- custom stylesheet -->
 </head>
 
 <body>
+
+    <!-- Project Heading -->
+    <nav class="navbar navbar-dark bg-secondary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Sorting Visualizer</span>
+        </div>
+    </nav> <!-- .navbar div ends -->
+
+    <!-- ******************************************************************** -->
+
     <div class="container">
 
-        <h3 ID="projectTitle">SORTING VISUALIZER</h3>
+        <div class="row">
+            <!--  Animation Stage -->
+            <div class="col-sm-7 p-1">
+                <div class="d-flex mr-auto bg-white" id="divBars" style="height: 400px;">
+                    <!-- all the divs will be populated at runtime by JS
+                    <div class="vr mt-auto"></div>
+                    -->
+                </div>
+            </div> <!-- animation stage ends -->
 
-        <!-- ANIMATION STAGE STARTS -->
+            <!-- ************************************************************** -->
 
-        <div id="divAnimContainer">
-            <div id="divBars">
-                <!-- place boxes of array items here using Javascript -->
-            </div> <!-- #divBars div ends -->
-        </div> <!-- #divAnimContainer div ends -->
+            <!-- Sorting Controls -->
+            <div class="col-sm-5 p-2">
+                <div class="row">
+                    <div class="col-sm-6 p-2">
+                        <button type="button" class="btn btn-outline-primary" id="btnArrayGenerator">Generate Random
+                            Array</button>
+                    </div>
+                    <div class="col-sm-6 p-2">
+                        <button type="button" class="btn btn-outline-primary" id="btnSort">Sort Array</button>
+                    </div>
+                </div>
 
-        <!-- ANIMATION STAGE ENDS -->
-       
-        <!-- *********************************************************************************************** -->
+                <div class="row">
+                    <div class="col-sm-12 p-2">
+                        <p class="h5"> Input: Array to be Sorted in Range [50, 350]:</p>
 
-        <!-- INPUT CONTROL STAGE STARTS -->
+                        <div id="divInputArrItems" style="word-wrap: break-word;">
+                            []
+                        </div>
+                    </div>
 
-        <div id="divInputCtrls">
+                    <div class="row">
+                        <div class="col-sm-12 p-2">
+                            <p class="h5"> Output: Sorted Array:</p>
 
-            <!-- <div id="divTxtArea">
-                Array to be Sorted: <div id="divTextArea"></div>
-            </div>  -- #divTxtArea div ends -->
-            <label id="arrayTxt">Array to be Sorted in the Range [50,350] : </label><br/><br/>
-            <label id="divTextArea"></label>
+                            <div id="divSortedArrItems" style="word-wrap: break-word;">
+                                []
+                            </div>
+                        </div>
 
-            <div id="divControls">
-                <button id="btnArrayGenerator">Generate Random Array</button>
-                <button id="btnSort">Sort Array</button>
-                <br>
+                        <div class="row">
+                            <div class="col p-2">
+                                <p>Select Sorting Algorithm</p>
+                                <label class="radio-inline">
+                                    <input type="radio" id="bubbleSortAlgo" name="sortingAlgo" value="bubbleSort"
+                                        checked> Bubble Sort
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id="insertionSortAlgo" name="sortingAlgo" value="insertionSort">
+                                    Insertion Sort
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id="selectionSortAlgo" name="sortingAlgo" value="selectionSort">
+                                    Selection Sort
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id="quickSortAlgo" name="sortingAlgo" value="quickSort"> Quick
+                                    Sort
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" id="mergeSortAlgo" name="sortingAlgo" value="mergeSort"> Merge
+                                    Sort
+                                </label>
 
-                <p>Select Sorting Algorithm</p>
-                <!-- radio buttons to select sorting algo -->
-                <input type="radio" id="bubbleSortAlgo" name="sortingAlgo" value="bubbleSort" checked>
-                <label for="bubbleSortAlgo">Bubble Sort</label><br>
-                <input type="radio" id="selectionSortAlgo" name="sortingAlgo" value="selectionSort">
-                <label for="selectionSortAlgo">Selection Sort</label><br>
-                <input type="radio" id="insertionSortAlgo" name="sortingAlgo" value="insertionSort">
-                <label for="insertionSortAlgo">Insertion Sort</label><br>
-                <input type="radio" id="quickSortAlgo" name="sortingAlgo" value="quickSort">
-                <label for="quickSortAlgo">Quick Sort</label><br>
-                <input type="radio" id="mergeSortAlgo" name="sortingAlgo" value="mergeSort">
-                <label for="mergeSortAlgo">Merge Sort</label><br>
+                            </div>
+                        </div>
 
-                <div class="divSlideContainer">
-                    <input type="range" min="5" max="50" value="25" step="5" class="slider" name="animationSpeedSlider"
-                        id="animationSlider">
-                    <label for="animationSpeedSlider">Animation Speed</label>
-                </div> <!-- #divSlideContainer div ends -->
+                        <div class="row">
+                            <div class="col p-2">
+                                <label for="animationSlider" class="form-label">Animation Speed</label>
+                                <input type="range" class="form-range" id="animationSlider" min="5" max="50" step="5"
+                                    value="25">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                
+        <!-- ********************************************************************************** -->
 
-            </div> <!-- #divControls div ends -->
+        <!-- Instructions -->
+        <div class="row">
 
-
-        </div> <!-- #divInputCtrls div ends -->
-
-        <!-- INPUT CONTROL STAGE ENDS -->
-
-        <!-- *************************************************************************************************** -->
+            <ul class="list-inline">
+                <li class="list-inline-item">Current Items being compared are displayed in <mark class="red">Red</mark>
+                    color.</li>
+                <li class="list-inline-item">In case of Quick Sort, Pivot Item is displayed in <mark
+                        class="green">Green</mark> color.
+                </li>
+                <li class="list-inline-item">Rest all Items are displayed in <mark class="primary">Primary</mark> color.
+                </li>
+            </ul>
+        </div>
 
     </div> <!-- .container div ends -->
 
-    <!-- scripts -->
-    <script src="./js/app.js"></script>
+    <!-- *************************************************************************************** -->
+
+    <!-- Footer -->
+    <footer class="footer bg-light text-center fixed-bottom">
+        <div class="container">
+            <p class="h4">Developed by
+                <a href="https://www.linkedin.com/in/rahulrajpandey/" class="link-primary">Rahul
+                    Raj</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- add scripts -->
+    <script src="./bootstrap5/js/bootstrap.min.js"></script>
+    <script src="./app.js"></script>
 </body>
 
 </html>
