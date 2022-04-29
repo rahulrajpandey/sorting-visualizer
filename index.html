@@ -25,7 +25,7 @@
 
         <div class="row">
             <!--  Animation Stage -->
-            <div class="col col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="col col-lg-7 col-md-12 col-sm-12 col-xs-12">
                 <div class="d-flex mr-auto bg-white" id="divBars" style="height: 400px;">
                     <!-- all the divs will be populated at runtime by JS
                     <div class="vr mt-auto"></div>
@@ -36,7 +36,7 @@
             <!-- ************************************************************** -->
 
             <!-- Sorting Controls -->
-            <div class="col col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="col col-lg-5 col-md-12 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="col-sm-6 p-2">
                         <button type="button" class="btn btn-outline-primary" id="btnArrayGenerator">Generate Random
@@ -45,7 +45,7 @@
                     <div class="col-sm-6 p-2">
                         <button type="button" class="btn btn-outline-primary" id="btnSort">Sort Array</button>
                     </div>
-                </div>
+                </div> <!-- .row divs for operations buttons ends -->
 
                 <div class="row">
                     <div class="col-sm-12 p-2">
@@ -55,54 +55,57 @@
                             []
                         </div>
                     </div>
+                </div> <!-- .row div for input unsorted array ends-->
 
-                    <div class="row">
-                        <div class="col-sm-12 p-2">
-                            <p class="h5"> Output: Sorted Array:</p>
+                <div class="row">
+                    <div class="col-sm-12 p-2">
+                        <p class="h5"> Output: Sorted Array:</p>
 
-                            <div id="divSortedArrItems" style="word-wrap: break-word;">
-                                []
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col p-2">
-                                <p>Select Sorting Algorithm</p>
-                                <label class="radio-inline">
-                                    <input type="radio" id="bubbleSortAlgo" name="sortingAlgo" value="bubbleSort"
-                                        checked> Bubble Sort
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" id="insertionSortAlgo" name="sortingAlgo" value="insertionSort">
-                                    Insertion Sort
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" id="selectionSortAlgo" name="sortingAlgo" value="selectionSort">
-                                    Selection Sort
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" id="quickSortAlgo" name="sortingAlgo" value="quickSort"> Quick
-                                    Sort
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" id="mergeSortAlgo" name="sortingAlgo" value="mergeSort"> Merge
-                                    Sort
-                                </label>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col p-2">
-                                <label for="animationSlider" class="form-label">Animation Speed</label>
-                                <input type="range" class="form-range" id="animationSlider" min="5" max="50" step="5"
-                                    value="25">
-                            </div>
+                        <div id="divSortedArrItems" style="word-wrap: break-word;">
+                            []
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div> <!-- .row div for sorted output array ends-->
+
+                <div class="row">
+                    <div class="col p-2">
+                        <p>Select Sorting Algorithm</p>
+                        <label class="radio-inline">
+                            <input type="radio" id="bubbleSortAlgo" name="sortingAlgo" value="bubbleSort" checked>
+                            Bubble Sort
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="insertionSortAlgo" name="sortingAlgo" value="insertionSort">
+                            Insertion Sort
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="selectionSortAlgo" name="sortingAlgo" value="selectionSort">
+                            Selection Sort
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="quickSortAlgo" name="sortingAlgo" value="quickSort"> Quick
+                            Sort
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" id="mergeSortAlgo" name="sortingAlgo" value="mergeSort"> Merge
+                            Sort
+                        </label>
+
+                    </div>
+                </div> <!-- .row div for Slection of Sorting Algorithms ends-->
+
+                <div class="row">
+                    <div class="col p-2">
+                        <label for="animationSlider" class="form-label">Animation Speed</label>
+                        <input type="range" class="form-range" id="animationSlider" min="5" max="50" step="5"
+                            value="25">
+                    </div>
+                </div> <!-- .row div for animation slider ends-->
+
+            </div> <!-- .col div for control elements ends-->
+
+        </div> <!-- .row div for complete animation and control elements ends -->
+
 
         <!-- ********************************************************************************** -->
 
@@ -118,9 +121,9 @@
                 <li class="list-inline-item">Rest all Items are displayed in <mark class="primary">Primary</mark> color.
                 </li>
             </ul>
-        </div>
+        </div> <!-- .row div for instructions ends-->
 
-    </div> <!-- .container div ends -->
+    </div> <!-- .container-fluid div ends -->
 
     <!-- *************************************************************************************** -->
 
