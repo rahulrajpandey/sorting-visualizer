@@ -1,7 +1,10 @@
+.row {
+    margin: 1px;
+}
+
 #divBars {
     box-shadow: 12px 12px 15px 0px rgba(161, 150, 161, 0.64);
     width: fit-content;
-    margin: 1px;
 }
 
 .vr {

@@ -33,12 +33,12 @@
     /* ********************* UI BINDINGS ********************** */
     /* ******************************************************** */
 
-    var btnArrayGenElement = document.querySelector("#btnArrayGenerator");
-    var btnSortElement = document.querySelector("#btnSort");
-    var divInputArrItemsElement = document.querySelector("#divInputArrItems");
-    var divSortedArrItemsElement = document.querySelector("#divSortedArrItems");
-    var divBarsElement = document.querySelector("#divBars");
-    var rangeAnimationSliderElement = document.querySelector("#animationSlider");
+    let btnArrayGenElement = document.querySelector("#btnArrayGenerator");
+    let btnSortElement = document.querySelector("#btnSort");
+    let divInputArrItemsElement = document.querySelector("#divInputArrItems");
+    let divSortedArrItemsElement = document.querySelector("#divSortedArrItems");
+    let divBarsElement = document.querySelector("#divBars");
+    let rangeAnimationSliderElement = document.querySelector("#animationSlider");
 
     divInputArrItemsElement.disabled = true; // disable the text input div
     divSortedArrItemsElement.disabled = true; // disable the text output div
@@ -148,9 +148,9 @@
     function showBoxes(array) {
         divBarsElement.replaceChildren(); // clear the div
 
-        var fragment = new DocumentFragment(); // Create the fragment
+        let fragment = new DocumentFragment(); // Create the fragment
 
-        array.forEach(function (item, index) {
+        array.forEach((item, index) => {
             const boxItem = document.createElement("div");
             boxItem.className = BOX_STYLE_CLASS;
             boxItem.style.height = item + "px";
@@ -218,7 +218,7 @@
             if (positionChangeCheck) {
                 const box = boxHTMLCollection.item(firstIndex);
 
-                setTimeout(function () {
+                setTimeout(() => {
                     box.style.height = secondIndex + "px";
                     box.innerHTML = secondIndex;
 
@@ -232,7 +232,7 @@
                 const box1 = boxHTMLCollection.item(firstIndex);
 
                 if (secondIndex === -1) { // quickSort case, pivot element coloring
-                    setTimeout(function () {
+                    setTimeout(() => {
                         box1.style.backgroundColor = animationStepColor;
 
                         if (i === (animationsLength - 1)) { // enable UI Elements
@@ -244,7 +244,7 @@
                 } else {
                     const box2 = boxHTMLCollection.item(secondIndex);
 
-                    setTimeout(function () {
+                    setTimeout(() => {
                         box1.style.backgroundColor = animationStepColor;
                         box2.style.backgroundColor = animationStepColor;
 
@@ -266,7 +266,7 @@
     function generateRandomArray() {
         array.length = 0; // clear the array
 
-        for (var count = 0; count < 20; count++) { // add 20 numbers in the range 50 to 350
+        for (let count = 0; count < 20; count++) { // add 20 numbers in the range 50 to 350
             array.push(getRandomInt(50, 350));
         }
 
@@ -323,10 +323,10 @@
     function bubbleSort(array) {
         animations.length = 0; // reset animation array
 
-        for (var i = 0; i < array.length; i++) { // bubble sort starts
+        for (let i = 0; i < array.length; i++) { // bubble sort starts
             let sortingFlag = false; // to optimize the sorting, once array is sorted, no more iterations will be made
 
-            for (var j = 0; j < array.length - i - 1; j++) { // inner for loop starts
+            for (let j = 0; j < array.length - i - 1; j++) { // inner for loop starts
 
                 // push current indexes in comparison to the animations array 
                 animations.push(new AnimationStep(j, j + 1, false, COMPARISON_COLOR)); // change color to comparison
@@ -335,8 +335,8 @@
                 if (array[j] > array[j + 1]) { // If the condition is true then swap them
                     sortingFlag = true;
 
-                    var temp1 = array[j];
-                    var temp2 = array[j + 1];
+                    let temp1 = array[j];
+                    let temp2 = array[j + 1];
 
                     array[j] = temp2;
                     array[j + 1] = temp1;
