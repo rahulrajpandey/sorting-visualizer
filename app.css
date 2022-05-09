@@ -12,6 +12,7 @@
     margin: 1px;
     width: 30px;
     color: white;
+    opacity: 1 !important;
 }
 
 mark.red {
